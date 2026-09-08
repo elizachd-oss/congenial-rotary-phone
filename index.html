@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>תאילנד 2026 — מלווה הטיול</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ec; --card:#ffffff; --ink:#17302c; --ink2:#5b6b68; --line:#e4dfd3;
+  --jade:#0f6b5c; --jade-soft:#dcefe9; --gold:#c9932a; --gold-soft:#fbefd3;
+  --red:#b8432f; --red-soft:#f9e1dc; --tab:#ffffffee; --shadow:0 1px 2px rgba(23,48,44,.06);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#10201d; --card:#182c28; --ink:#eef3f0; --ink2:#9fb3ae; --line:#27403a;
+  --jade:#4fc4a8; --jade-soft:#173d35; --gold:#e5b658; --gold-soft:#3d3115;
+  --red:#ef8a76; --red-soft:#4a2620; --tab:#182c28ee; --shadow:none;
+}}
+:root[data-theme="dark"]{
+  --bg:#10201d; --card:#182c28; --ink:#eef3f0; --ink2:#9fb3ae; --line:#27403a;
+  --jade:#4fc4a8; --jade-soft:#173d35; --gold:#e5b658; --gold-soft:#3d3115;
+  --red:#ef8a76; --red-soft:#4a2620; --tab:#182c28ee; --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+header{padding:calc(14px + env(safe-area-inset-top)) 18px 10px;background:var(--bg);position:sticky;top:0;z-index:5}
+header h1{font-size:20px;font-weight:900;margin:0;letter-spacing:-.01em}
+header p{margin:2px 0 0;color:var(--ink2);font-size:13px}
+main{padding:4px 14px 20px;max-width:640px;margin:0 auto}
+section{display:none}section.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0;box-shadow:var(--shadow)}
+.card h2{font-size:17px;font-weight:700;margin:0 0 6px}
+.card h3{font-size:15px;font-weight:700;margin:12px 0 4px;color:var(--jade)}
+.muted{color:var(--ink2);font-size:14px}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:500;background:var(--jade-soft);color:var(--jade);margin-inline-start:6px;vertical-align:middle}
+.chip.gold{background:var(--gold-soft);color:var(--gold)}
+.chip.red{background:var(--red-soft);color:var(--red)}
+.hero{background:var(--jade);color:#fff;border:none;border-radius:18px;padding:18px 18px 16px}
+.hero .big{font-size:34px;font-weight:900;line-height:1.1}
+.hero .sub{opacity:.85;font-size:14px;margin-top:4px}
+.hero .day{font-size:18px;font-weight:700;margin-top:10px}
+.toggle{display:flex;gap:8px;margin:12px 0 4px}
+.toggle button{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;font-size:15px}
+.toggle button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.t{color:var(--jade);font-weight:700}
+.act p{margin:6px 0}
+.dayrow{display:flex;gap:12px;align-items:flex-start;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.dayrow:last-child{border-bottom:none}
+.dayrow .date{min-width:50px;text-align:center;background:var(--gold-soft);color:var(--gold);border-radius:10px;padding:6px 4px;font-weight:900;font-size:18px;line-height:1}
+.dayrow .date small{display:block;font-size:11px;font-weight:500;margin-top:3px}
+.dayrow .date.past{background:var(--line);color:var(--ink2)}
+.dayrow .date.today{background:var(--jade);color:#fff}
+.dayrow .body{flex:1}
+.dayrow .dest{font-weight:700;font-size:16px}
+.dayrow .hotel{color:var(--ink2);font-size:13.5px}
+.dayrow .detail{display:none;margin-top:8px;font-size:14.5px}
+.dayrow.open .detail{display:block}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:right;padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink2);font-weight:500;font-size:12.5px}
+.scroll{overflow-x:auto}
+.mono{font-variant-numeric:tabular-nums;direction:ltr;display:inline-block}
+.filters{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;-webkit-overflow-scrolling:touch}
+.filters button{white-space:nowrap;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px}
+.filters button.on{background:var(--jade);color:#fff;border-color:var(--jade)}
+.rec{padding:10px 0;border-bottom:1px solid var(--line)}
+.rec:last-child{border:none}
+.rec .name{font-weight:700}
+.rec .desc{font-size:14px;margin:3px 0}
+.rec .price{font-size:13px;color:var(--gold);font-weight:500}
+label.chk{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+label.chk:last-child{border:none}
+label.chk input{width:22px;height:22px;accent-color:var(--jade);margin-top:2px;flex-shrink:0}
+label.chk.done span.txt{text-decoration:line-through;color:var(--ink2)}
+label.chk .own{color:var(--ink2);font-size:12.5px;display:block}
+.prog{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin:6px 0 2px}
+.prog i{display:block;height:100%;background:var(--jade);width:0;transition:width .3s}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--tab);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:10}
+nav button{flex:1;border:none;background:none;color:var(--ink2);font:inherit;font-size:10.5px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0}
+nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--jade);font-weight:700}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:40vh}
+.msg{max-width:88%;padding:10px 14px;border-radius:16px;font-size:15px;white-space:pre-wrap}
+.msg.u{align-self:flex-start;background:var(--jade);color:#fff;border-bottom-right-radius:4px}
+.msg.a{align-self:flex-end;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.ask{position:sticky;bottom:calc(80px + env(safe-area-inset-bottom));display:flex;gap:8px;background:var(--bg);padding:10px 0}
+.ask input{flex:1;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:16px}
+.ask button{padding:0 18px;border-radius:14px;border:none;background:var(--jade);color:#fff;font:inherit;font-weight:700;font-size:15px}
+.ask button:disabled{opacity:.5}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.sugg button{padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:13.5px}
+.notice{background:var(--gold-soft);color:var(--ink);border-radius:12px;padding:10px 14px;font-size:14px;margin:8px 0}
+.small{font-size:13px}
+a{color:var(--jade)}
+.gate{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.gate h2{font-size:22px;margin:0 0 6px}.gate p{color:var(--ink2);margin:0 0 18px}
+.gate input{font:inherit;font-size:28px;letter-spacing:.4em;text-align:center;width:200px;padding:10px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);direction:ltr}
+.gate button{margin-top:14px;padding:12px 32px;border-radius:14px;border:none;background:var(--jade);color:#fff;font:inherit;font-weight:700;font-size:16px}
+.gate .err{color:var(--red);min-height:22px;margin-top:8px}
+.key{display:flex;gap:8px;margin-top:8px}.key input{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;direction:ltr}
+.key button{padding:0 14px;border-radius:10px;border:none;background:var(--jade);color:#fff;font:inherit;font-weight:700}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="gate" id="gate"><div style="font-size:48px">🐘</div><h2>תאילנד 2026</h2><p>הזינו קוד כניסה</p><input id="pin" inputmode="numeric" maxlength="6" autocomplete="off"><button id="pinbtn">כניסה</button><div class="err" id="pinerr"></div></div>
+<header><h1 id="hdr">תאילנד 2026 — מלווה הטיול</h1><p id="hdrsub"></p></header>
+<main>
+<section id="s-today" class="active"></section>
+<section id="s-days"><div class="card" id="dayslist"></div></section>
+<section id="s-flights"></section>
+<section id="s-food"></section>
+<section id="s-tasks"></section>
+<section id="s-ai">
+  <div class="card"><h2>שאלו על הטיול</h2><p class="muted small">התשובות מבוססות על טבלת התכנון בלבד. ה-AI מציין כשמשהו לא מופיע בתכנון.</p>
+  <div class="sugg" id="sugg"></div><div id="aikey" style="display:none"><p class="small muted" style="margin:10px 0 0">בגרסה הזו ה-AI עובד עם מפתח API של Anthropic (נשמר במכשיר הזה בלבד):</p><div class="key"><input id="keyin" placeholder="sk-ant-..." type="password"><button id="keybtn">שמור</button></div></div></div>
+  <div class="chat" id="chat"></div>
+  <div class="ask"><input id="q" placeholder="למשל: איפה תמר אוכלת בפאי?" enterkeyhint="send"><button id="send">שלח</button></div>
+</section>
+</main>
+<nav>
+  <button data-s="today" class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>עכשיו</button>
+  <button data-s="days"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>מסלול</button>
+  <button data-s="flights"><svg viewBox="0 0 24 24"><path d="M2 16l20-6-8 8-3-4-9 2zM14 18l-2-3"/></svg>טיסות</button>
+  <button data-s="food"><svg viewBox="0 0 24 24"><path d="M6 3v7a3 3 0 006 0V3M9 3v18M18 3c-2 1-3 4-3 8h3v10"/></svg>אוכל</button>
+  <button data-s="tasks"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>משימות</button>
+  <button data-s="ai"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>שאל AI</button>
+</nav>
+<script id="data" type="application/json">{
+ "days": [
+  {
+   "date": "2026-09-10",
+   "weekday": "חמישי",
+   "dest": "טיסה מהארץ",
+   "hotel": "בטיסה",
+   "activities": "טיסה מנתב\"ג ועצירה ברומא",
+   "logistics": "טיסה AZ 809 (05:15-08:00) מנתב\"ג טרמינל 3. קונקשן ברומא (7:15 שעות). טיסה AZ 758 (15:15-07:25) לבנגקוק.",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "כבודה מותרת: מזוודה אחת של 23 ק\"ג לכל נוסע (1PC)"
+  },
+  {
+   "date": "2026-09-11",
+   "weekday": "שישי",
+   "dest": "בנגקוק",
+   "hotel": "Chatrium Grand Bangkok",
+   "activities": "התאקלמות ומנוחה מג'ט-לג. צהריים ממוזג ב-Siam Paragon. בצהריים מנוחה ובריכה במלון. בערב (18:00): סעודת ערב ראש השנה תשפ\"ז חגיגית ומרגשת בבית חב\"ד בנגקוק (הוזמן ל-18:00!). יש מענה בטוח ללא גלוטן (GF) כולל שניצלים מותאמים לתמר. לאחר מכן סיור רגלי קל ב-Siam Square.",
+   "logistics": "נחיתה בבנגקוק (BKK) ב-07:25 בבוקר. מונית/הסעה משפחתית למלון ברובע סיאם.",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "יום נחיתה קל והתאקלמות רכה בבנגקוק. סעודת ערב ראש השנה תשפ\"ז חגיגית בבית חב\"ד בנגקוק הוזמנה לשעה 18:00! מענה מעולה לל\"ג לתמר."
+  },
+  {
+   "date": "2026-09-12",
+   "weekday": "שבת",
+   "dest": "בנגקוק",
+   "hotel": "Chatrium Grand Bangkok",
+   "activities": "05:50 ריצת בוקר בפארק לומפיני (Lumphini Park). 09:00-10:45 שוק סוף השבוע צ'אטוצ'אק (Chatuchak Weekend Market) - להגיע מוקדם! 13:00-14:00 מקדש ואט פו (Wat Pho) - הבודהה השוכב הענק. 14:15-15:30 שייט תעלות פרטי בסירת לונגטייל (Long-tail Boat) ברובע Thonburi. מנוחה ובריכה. 18:30 ערב צבעוני ומרתק בצ'יינה טאון (Yaowarat Road) - כאוס צבעוני ואוכל רחוב (לתמר מומלץ לאכול לפני כן המבורגר בלחמנייה ללא גלוטן וצ'יפס בטוח ב-Hard Rock Cafe בסיאם סקוור או ב-25 Degrees Silom כדי להימנע מזיהום צולב בשוק).",
+   "logistics": "נסיעות בעיר במוניות (מומלץ להשתמש באפליקציית Grab/Bolt) או בטוק-טוק לחוויה משפחתית.",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "יום עשיר ומגוון המשלב ספורט בוקר, שוק מסורתי ענק, מקדש, שייט וערב מדהים בצ'יינה טאון."
+  },
+  {
+   "date": "2026-09-13",
+   "weekday": "ראשון",
+   "dest": "צ'יאנג מאי",
+   "hotel": "Meliá Chiang Mai",
+   "activities": "ארוחת בוקר מפנקת במלון Chatrium Grand ומנוחה. התארגנות וצ'ק-אאוט. ב-10:15 נסיעה בראש שקט לשדה התעופה סוברנבהומי. טיסת פנים לבנגקוק-צ'יאנג מאי TG 110 (13:30-14:50). הגעה והתארגנות במלון בצפון Meliá Chiang Mai. בערב: חובה לבקר בשוק הלילה המפורסם של יום ראשון (Sunday Walking Street) - חוויה צבעונית ושופינג (לתמר מומלץ לאכול מנגו סטיקי רייס שהוא ללא גלוטן מטבעו, או לאכול ב-Kat's Kitchen בעיר העתיקה - מסעדה תאילנדית עם מודעות צליאק עילאית ורטבים בטוחים).",
+   "logistics": "טיסת פנים בנגקוק לצ'יאנג מאי TG 110 (13:30-14:50). מושבים: Elizah (41H), Or (41J), Tamar (41B), Hava (42H), Yossef (42B).",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "הגעה לצפון בדיוק בזמן לשוק יום ראשון המפורסם! 4 חדרים ל-5 מבוגרים ו-3 ילדים ב-Meliá Chiang Mai."
+  },
+  {
+   "date": "2026-09-14",
+   "weekday": "שני",
+   "dest": "צ'יאנג מאי",
+   "hotel": "Meliá Chiang Mai",
+   "activities": "ביקור בבית הקפה והחווה Elefin Farm & Cafe (שתיית קפה והאכלת פילים חופשיים). סיור משפחתי במקדש Wat Phra That Doi Suthep על ההר. בערב מומלץ לסעוד ב-Butter Is Better - דיינר אמריקאי מעולה ברובע צ'אנג קלאן (ממש קרוב למלון שלכם!) המציע לחם, בייגל ופנקייקים ללא גלוטן, או ב-Favola במלון לה מרידיאן הסמוך לפיצות ופסטות לל\"ג.",
+   "logistics": "נסיעה במונית מקומית או רכב פרטי שיאורגן במלון ליום הטיול.",
+   "status": "הוזמן",
+   "cost": 2000,
+   "notes": "הוזמן! 4 חדרים ל-5 מבוגרים ו-3 ילדים. מומלץ לתאם פעילויות ליום זה."
+  },
+  {
+   "date": "2026-09-15",
+   "weekday": "שלישי",
+   "dest": "פאי (Pai)",
+   "hotel": "The Quarter, פאי (הוזמן!)",
+   "activities": "יציאה ממלון Meliá Chiang Mai בשעה 09:00 בבוקר עם המדריך אסף מ-Topper Tours. פעילויות היום: גלישה באומגה (10 תחנות), ביקור בחווה טיפולית של פילים, רפטינג חווייתי ומהנה בנהר, ביקור בכפר של שבט ארוכות הצוואר, ותצפית שקיעה מרהיבה בקניון פאי (Pai Canyon). בערב: זמן חופשי בפאי.",
+   "logistics": "איסוף מהמלון בצ'יאנג מאי ע\"י Topper Tours. נסיעה משפחתית ברכב פרטי נוח ומרווח. כולל מים, ביטוח וכניסות לאתרים. הערה: את המזוודות הגדולות משאירים במלון Meliá בצ'יאנג מאי, ונוסעים לפאי עם תיק גב קטן ליומיים בלבד (מכיוון שחוזרים לאותו המלון).",
+   "status": "הוזמן",
+   "cost": 68000,
+   "notes": "הוזמן! טיול פרטי מודרך עם Topper Tours (המדריך אסף). המחיר: 8,500 באט לאדם (סך הכל 68,000 באט עבור 8 נפשות) - הכל כלול: מדריך אסף, רכב, מים, ביטוח, כניסות לאתרים, מלון Quarter ל-2 לילות והסעות. הערה חשובה: משאירים את המזוודות הגדולות בשמירת חפצים במלון Meliá Chiang Mai, ונוסעים לפאי עם תיק גב קטן בלבד."
+  },
+  {
+   "date": "2026-09-16",
+   "weekday": "רביעי",
+   "dest": "פאי (Pai)",
+   "hotel": "The Quarter, פאי (הוזמן!)",
+   "activities": "יציאה ממלון The Quarter בפאי. פעילויות היום: ביקור במערת לוד (Tham Lod Cave) המרשימה, שייט חווייתי על רפסודת במבוק בתוך המערה הנסתרת, רחצה ופינוק במעיינות חמים (Hot Springs) טבעיים בלב הג'ונגל, ונסיעת שטח מהנה ומעולה לכפרים מקומיים אותנטיים. בערב: זמן חופשי לסיור קניות ואوכל בשוק הלילה העצמאי של פאי (לתמר מומלץ לאכול טוסט גבינה ב-Cheese Madness המציע לחם ללא גלוטן וטוסטר נפרד!).",
+   "logistics": "רכב צמוד ונוח ומדריך פרטי (אסף) עם Topper Tours לכל אורך היום.",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "כלול במחיר הטיול של Topper Tours. מלון The Quarter, פאי (הוזמן!)."
+  },
+  {
+   "date": "2026-09-17",
+   "weekday": "חמישי",
+   "dest": "צ'יאנג מאי",
+   "hotel": "Meliá Chiang Mai (הוזמן!)",
+   "activities": "יציאה ממלון The Quarter בפאי. פעילויות היום: ביקור בגשר הזיכרון ההיסטורי (Memorial Bridge), עלייה לתצפית יונלאי (Yun Lai Viewpoint) המרהיבה, סיור בכפר הסיני Santichon, ביקור בפסל הבודהה הגדול (Big Buddha), ורחצה במפלים הלבנים (Mo Paeng Waterfalls). בשעה 19:00 נסיעה חזרה לצ'יאנג מאי והתמקמות מחדש במלון Meliá Chiang Mai.",
+   "logistics": "נסיעה חזרה מפאי לצ'יאנג מאי וסיום השירות של Topper Tours (רכב פרטי ממוזג עם המדריך אסף).",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "התמקמות מחדש במלון Meliá Chiang Mai (הוזמן!). אוספים את המזוודות הגדולות שהשארתם בשמירת חפצים ומקבלים מחדש את 4 החדרים. בערב: זמן חופשי בצ'יאנג מאי."
+  },
+  {
+   "date": "2026-09-18",
+   "weekday": "שישי",
+   "dest": "צ'יאנג מאי",
+   "hotel": "Meliá Chiang Mai",
+   "activities": "פעילות משפחתית חווייתית ולא מעייפת: בבוקר נסיעה לפארק Pong Yang לבילוי משפחתי מהנה ב-Jungle Coaster (מזחלת הרים מהירה). בצהריים: השתתפות בסדנת בישול תאילנדית משפחתית פרטית ומותאמת ללא גלוטן ב-Small House Thai Cooking School בצ'יאנג מאי - לומדים לבשל פאד תאי, קארי ומנגו סטיקי רייס בטוחים ב-100% מצליאק (חוויה מדהימה ומגבשת לכל המשפחה!). בערב: עיסוי תאילנדי מפנק בספא איכותי ליד המלון, וזמן חופשי לקניות אחרונות בצפון.",
+   "logistics": "רכב פרטי ליום שלם או מונית מסודרת.",
+   "status": "הוזמן",
+   "cost": 4000,
+   "notes": "הוזמן! יום פעילויות מנוחה, סדנת בישול משפחתית וספא בצ'יאנג מאי (ללא חפיפה לפעילויות פאי!)."
+  },
+  {
+   "date": "2026-09-19",
+   "weekday": "שבת",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "טיסה לקוסמוי, הגעה לצ'ק-אין בריזורט מפנק על קו המים ומנוחה על החוף הלבן.",
+   "logistics": "טיסת פנים מצ'יאנג מאי לקוסמוי (מומלץ לבדוק טיסות ישירות של Bangkok Airways או דרך בנגקוק).",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "הוזמן! וילת חוף פרטית יוקרתית על קו המים בחוף Bang Por. כוללת בריכת אינפיניטי, שירות שף תאילנדי פרטי צמוד (יעודכן לגבי הצליאק של תמר ויבשל עם רוטב סויה Tamari שתביאו מהארץ) והסעה משדה התעופה בקוסמוי."
+  },
+  {
+   "date": "2026-09-20",
+   "weekday": "ראשון",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "יום רגוע בחוף Chaweng התוסס או בריכת הריזורט. בערב: ביקור במקדש הבודהה הגדול (Wat Phra Yai) וסיור שקיעה. לארוחת ערב חגיגית מומלץ להזמין מקום ב-Prego Samui בחוף צ'אוונג - מסעדה איטלקית יוקרתית עם תפריט שלם נפרד ללא גלוטן (פיצות, פסטות וטירמיסו לל\"ג!).",
+   "logistics": "מוניות מקומיות או רכב פרטי מוזמן מהמלון.",
+   "status": "הוזמן",
+   "cost": 500,
+   "notes": "העברה מונחת מהוילה לבודהה הגדול ובערב חזרה לוילה אנאר המפנקת."
+  },
+  {
+   "date": "2026-09-21",
+   "weekday": "שני",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "טיול ג'יפים משפחתי 4X4 בג'ונגל ובאטרקציות ההרריות של האי, כולל ביקור במפלי Na Muang ובגן הקסום (Secret Buddha Garden).",
+   "logistics": "סיור ג'יפים מאורגן כולל איסוף וחזרה מהמלון.",
+   "status": "הוזמן",
+   "cost": 6000,
+   "notes": "טיול ג'יפים חווייתי ואינטנסיבי. חזרה לוילה לארוחת ערב פרטית עם השף שלכם."
+  },
+  {
+   "date": "2026-09-22",
+   "weekday": "שלישי",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "טיול יום שייט בסירת ספידבוט לשמורת 42 האיים אנג תונג (Angthong National Marine Park) - כולל קיאקים בים, שנורקלינג ומפגש עם קופים.",
+   "logistics": "איסוף משפחתי מהמלון לשייט וחזרה אחה\"צ. הכל כלול.",
+   "status": "הוזמן",
+   "cost": 7500,
+   "notes": "יום שייט מרהיב לשמורה. חזרה אחה\"צ למנוחה בוילה אנאר."
+  },
+  {
+   "date": "2026-09-23",
+   "weekday": "רביעי",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "יום רגוע של 'בטן-גב' ומנוחה בריזורט. אחה\"צ: ביקור בבית קפה עם קפיבארות חמודות (Capybara World) ומשחק Football Golf.",
+   "logistics": "מונית מקומית מהמלון וחזרה.",
+   "status": "הוזמן",
+   "cost": 1200,
+   "notes": "יום של מנוחה בוילה ובריכת האינפיניטי. אחה\"צ קליל במפגש עם קפיבארות."
+  },
+  {
+   "date": "2026-09-24",
+   "weekday": "חמישי",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "נסיעה לאי החזירים (Koh Madsum / Pig Island) - שייט קצר בסירת לונגטייל, האכלה וליטוף של חזירים חמודים על חוף הים הלבן.",
+   "logistics": "שייט פרטי קצר או סיור חצי יום בקבוצה.",
+   "status": "הוזמן",
+   "cost": 3500,
+   "notes": "שייט קצר לאי החזירים וחזרה לבילוי וילה משפחתי רגוע."
+  },
+  {
+   "date": "2026-09-25",
+   "weekday": "שישי",
+   "dest": "קוסמוי",
+   "hotel": "וילה אנאר (Villa Anar)",
+   "activities": "בוקר רגוע בקוסמוי. אחה\"צ-ערב: ביקור חובה בשוק Fisherman's Village בבופוט ומופע אש בבר Coco Tam's. לארוחת ערב מומלץ לאכול ב-Kawin's Kitchen בבופוט (מול הולידיי אין) - בעלת המקום היא אמא לצליאקית והמטבח מציע מנות תאילנדיות גדולות, טעימות ובטוחות ב-100% (פאד תאי, קארי, מוקפצים ודגים).",
+   "logistics": "מונית הלוך-חזור לכפר הדייגים.",
+   "status": "הוזמן",
+   "cost": 2000,
+   "notes": "ערב אחרון ומרגש בקוסמוי: מופע האש ב-Coco Tam's ושוק הלילה. חזרה ללילה אחרון בוילה אנאר."
+  },
+  {
+   "date": "2026-09-26",
+   "weekday": "שבת",
+   "dest": "בנגקוק",
+   "hotel": "Chatrium Grand Bangkok",
+   "activities": "נחיתה מקוסמוי בבנגקוק והעברה למלון. 16:30-18:00 ביקור אינטראקטיבי וממוזג בבית הקפה קורגי (Corgi in the Garden) בצ'רואן נאקון (מפגש עם 33 קורגים מתוקים). 18:15 קניון ICONSIAM המפואר, ביקור בשוק הצף המקורה SookSiam בקומת הקרקע. 20:00 בילוי קצר בנהר במתחם Asiatique (גלגל ענק ודוכנים).",
+   "logistics": "טיסת פנים קוסמוי לבנגקוק. מונית משפחתית משדה התעופה למלון החדש.",
+   "status": "בתכנון",
+   "cost": 0,
+   "notes": "שילוב נהדר של קורגים חמודים, קניון מפואר ובילוי נהר קליל."
+  },
+  {
+   "date": "2026-09-27",
+   "weekday": "ראשון",
+   "dest": "בנגקוק",
+   "hotel": "Chatrium Grand Bangkok",
+   "activities": "06:00 ריצת בוקר. 08:30-10:00 ביקור בארמון המלך (Grand Palace) המפואר ומקדש Wat Phra Kaew (מקדש האמרלד בודהה). 10:00-10:45 שוק הפרחים הצבעוני Pak Khlong Talat. 11:30-13:30 קניות ב-MBK Center וביקור בחנות היפנית המשוגעת Don Don Donki (לתמר מומלץ לאכול צהריים ב-Bangkok Bold Kitchen בקומת הקרקע של קניון Central Embassy הסמוך המציע תפריט ייחודי ומאובטח ללא גלוטן, או לאכול ב-Acai Story או במזנון Mango שבקומת האוכל). 14:00-17:00 פיצול משפחתי ובילוי באזור סיאם. 19:30 ארוחת ערב חגיגית לסיכום הטיול המשפחתי ב-Din Tai Fung ב-CentralWorld!",
+   "logistics": "שימוש ברכבת ה-BTS היעילה או מוניות Grab/Bolt כדי להימנע מפקקים.",
+   "status": "בתכנון",
+   "cost": 5000,
+   "notes": "שילוב מנצח של ארמון המלך בבוקר ושופינג ובילוי משפחתי ממוזג באזור סיאם בצהריים ובערב."
+  },
+  {
+   "date": "2026-09-28",
+   "weekday": "שני",
+   "dest": "טיסה חזרה לארץ",
+   "hotel": "בטיסה (לילה)",
+   "activities": "צ'ק אאוט והגעה מוקדמת לשדה התעופה לטיסת החזור.",
+   "logistics": "טיסה AZ 759 מבנגקוק ב-12:25, הגעה לרומא ב-19:15. טיסת המשך AZ 810 מרומא ב-23:35 ונחיתה בנתב\"ג ב-29.09 ב-03:55 לפנות בוקר.",
+   "status": "הוזמן",
+   "cost": 0,
+   "notes": "להגיע כ-3.5 שעות לפני המראה עקב תורים ממושכים בשדה התעופה של בנגקוק Suvarnabhumi"
+  }
+ ],
+ "pax": [
+  {
+   "id": "P1",
+   "name": "DEMBINSKI ELIZAH MR",
+   "type": "מבוגר (ADT)",
+   "ticket": "217 2350120171",
+   "seat": "41H",
+   "meal": "מנת פירות (FPML)",
+   "mealStatus": "מאושר (CONFIRMED)"
+  },
+  {
+   "id": "P2",
+   "name": "DEMBINSKI OR MISS",
+   "type": "מבוגר (ADT)",
+   "ticket": "217 2350120172",
+   "seat": "41J",
+   "meal": "ארוחת ילדים (CHML)",
+   "mealStatus": "מאושר (CONFIRMED)"
+  },
+  {
+   "id": "P3",
+   "name": "DEMBINSKI TAMAR MISS",
+   "type": "מבוגר (ADT)",
+   "ticket": "217 2350120174",
+   "seat": "41B",
+   "meal": "נטול גלוטן (GFML)",
+   "mealStatus": "מאושר (CONFIRMED)"
+  },
+  {
+   "id": "P4",
+   "name": "DEMBINSKI HAVA MRS",
+   "type": "מבוגר (ADT)",
+   "ticket": "217 2350120175",
+   "seat": "42H",
+   "meal": "מנת פירות (FPML)",
+   "mealStatus": "מאושר (CONFIRMED)"
+  },
+  {
+   "id": "P5",
+   "name": "YOSSEF ZVI MR",
+   "type": "מבוגר (ADT)",
+   "ticket": "217 2350120177",
+   "seat": "42B",
+   "meal": "ארוחה כשרה (KSML)",
+   "mealStatus": "מאושר (CONFIRMED)"
+  }
+ ],
+ "flights": [
+  {
+   "code": "AZ 809",
+   "airline": "ITA Airways",
+   "origin": "נתב\"ג (טרמינל 3)",
+   "dep": "10/09, 05:15",
+   "dest": "רומא FCO (טרמינל 3)",
+   "arr": "10/09, 08:00",
+   "duration": "3 שעות ו-45 דקות"
+  },
+  {
+   "code": "- קונקשן -",
+   "airline": "ברומא",
+   "origin": "רומא FCO",
+   "dep": "10/09, 08:00",
+   "dest": "רומא FCO",
+   "arr": "10/09, 15:15",
+   "duration": "המתנה של 7 שעות ו-15 דקות"
+  },
+  {
+   "code": "AZ 758",
+   "airline": "ITA Airways",
+   "origin": "רומא FCO (טרמינל 1)",
+   "dep": "10/09, 15:15",
+   "dest": "בנגקוק BKK",
+   "arr": "11/09, 07:25",
+   "duration": "11 שעות ו-10 דקות (טיסת לילה)"
+  },
+  {
+   "code": "TG 110",
+   "airline": "Thai Airways",
+   "origin": "בנגקוק BKK",
+   "dep": "13/09, 13:30",
+   "dest": "צ'יאנג מאי CNX",
+   "arr": "13/09, 14:50",
+   "duration": "שעה ו-20 דקות (טיסת פנים)"
+  },
+  {
+   "code": "AZ 759",
+   "airline": "ITA Airways",
+   "origin": "בנגקוק BKK",
+   "dep": "28/09, 12:25",
+   "dest": "רומא FCO (טרמינל 3)",
+   "arr": "28/09, 19:15",
+   "duration": "11 שעות ו-50 דקות"
+  },
+  {
+   "code": "- קונקשן -",
+   "airline": "ברומא",
+   "origin": "רומא FCO",
+   "dep": "28/09, 19:15",
+   "dest": "רומא FCO",
+   "arr": "28/09, 23:35",
+   "duration": "המתנה של 4 שעות ו-20 דקות"
+  },
+  {
+   "code": "AZ 810",
+   "airline": "ITA Airways",
+   "origin": "רומא FCO (טרמינל 1)",
+   "dep": "28/09, 23:35",
+   "dest": "נתב\"ג (טרמינל 3)",
+   "arr": "29/09, 03:55",
+   "duration": "3 שעות ו-20 דקות (נחיתה לפנות בוקר)"
+  }
+ ],
+ "recs": [
+  {
+   "area": "בנגקוק",
+   "cat": "לינה (הוזמן!)",
+   "name": "Chatrium Grand Bangkok",
+   "desc": "מלון 5 כוכבים יוקרתי ומדהים בלב רובע הקניות סיאם. מציע בריכה מרהיבה ומעוצבת, ספא THANN מפנק במיוחד ומגוון מסעדות גורמה (Savio, Etcha Borderless, Flow על החוף של הבריכה). סמוך מאוד לקניונים Siam Paragon ו-CentralWorld במרחק הליכה קצר.",
+   "price": "$$$$-$$$$$ (הוזמן! טלפון: +66 2 126 7999, מייל: info.cgb@chatrium.com, כתובת: 728 Phetchaburi Road)"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "אטרקציה משפחתית",
+   "name": "HarborLand (One Bangkok)",
+   "desc": "משחקיית ענק סגורה וממוזגת מהגדולות באסיה, מושלמת לילדים להוציא אנרגיה ולשחק בבטחה בשעות החמות ביותר של היום.",
+   "price": "מחיר בינוני. חובה להביא גרביים מונעות החלקה!"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "אטרקציה משפחתית / חיות",
+   "name": "Corgi in the Garden",
+   "desc": "בית קפה פופולרי ומקסים הממוקם בצ'רואן נאקון (לא רחוק מקניון ICONSIAM). יש כיום 33 כלבי קורגי חמודים וידידותיים במיוחד, והביקור נעשה בסבבים מוגדרים. הסבב האחרון והמומלץ ביותר הוא 16:30-18:00 (הכלבים יוצאים ב-16:45-17:45). הביקור ממוזג, כיפי ומהנה מאוד לילדים ובני נוער.",
+   "price": "החל מ-350 באט (כולל משקה). מומלץ לבדוק סבבים מראש!"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "קניות וקולינריה",
+   "name": "ICONSIAM (שוק SookSiam)",
+   "desc": "אחד ממרכזי הקניות המפוארים והמרשימים ביותר בעולם, השוכן על גדת נהר הצ'או פראיה. גולת הכותרת למשפחה היא קומת הקרקע - SookSiam - שוק צף מקורה וממוזג המציע דוכני אוכל רחוב, מלאכת יד ואמנות מכל ארבעת מחוזות תאילנד באווירה ויזואלית מרהיבה.",
+   "price": "כניסה חופשית, מחירים נוחים לאוכל רחוב מגוון ומעולה."
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "חוויה יהודית (הוזמן!)",
+   "name": "בית חב\"ד בנגקוק (Chabad House)",
+   "desc": "מרכז קהילתי חם ומזמין בבנגקוק המציע תפילות וארוחות שבת וחג באווירה משפחתית מדהימה. סעודת ערב ראש השנה תשפ\"ז שלכם מאושרת ומובטחת לשעה 18:30 (יום שישי, 11/09, כ\"ט באלול). חוויה מרגשת ומאחדת לכל המשפחה לציון החג המיוחד בארץ זרה.",
+   "price": "הוזמן לערב ראש השנה 11/09 בשעה 18:30"
+  },
+  {
+   "area": "צ'יאנג מאי",
+   "cat": "לינה (הוזמן!)",
+   "name": "Meliá Chiang Mai",
+   "desc": "מלון 5 כוכבים יוקרתי ומפנק במיוחד הממוקם ברובע צ'יאנג קלאן, סמוך מאוד לשוק הלילה המרכזי (Night Bazaar). מציע חדרים מרווחים, בריכת שחייה נהדרת, מועדון ילדים, ספא יוקרתי ואת ה-Mai The Sky Bar - בר הגג הגבוה בעיר עם תצפית פנורמית מרהיבה.",
+   "price": "$$$ (הוזמן! 4 חדרים ל-5 מבוגרים ו-3 ילדים. כתובת: Charoen Prathet Road Changklan 46)"
+  },
+  {
+   "area": "צ'יאנג מאי",
+   "cat": "חוויית פילים אתית",
+   "name": "Elephant Nature Park",
+   "desc": "חוות מקלט מפורסמת ואתית לחלוטין לפילים משוקמים. ללא רכיבה, ללא מופעים וללא שוטים. הילדים ילמדו על שיקום, יאכילו פילים, ויראו אותם מתרחצים בנהר.",
+   "price": "חובה להזמין שבועות רבים מראש! יום שלם כולל ארוחה והסעה."
+  },
+  {
+   "area": "צ'יאנג מאי",
+   "cat": "פילים וקפה",
+   "name": "Elefin Farm and Cafe",
+   "desc": "בית קפה פסטורלי בהרים בו פילים מסתובבים חופשי. ניתן לשתות משקה טעים, להאכיל אותם בבננות ולהצטלם איתם מקרוב באווירה כפרית ונעימה.",
+   "price": "כניסה חופשית, רכישת סלסלת בננות להאכלה בכמה דולרים בודדים."
+  },
+  {
+   "area": "צ'יאנג מאי",
+   "cat": "אקסטרים משפחתי",
+   "name": "Pong Yang Jungle Coaster",
+   "desc": "פארק הרפתקאות בטבע הכולל מזחלות הרים (ג'ונגל קוסטר) שבהן שולטים על המהירות בנסיעה במדרון, ומסלולי אומגות בין צמרות העצים.",
+   "price": "מתאים למגוון גילאים. ממוקם כ-45 דקות מהעיר."
+  },
+  {
+   "area": "פאי",
+   "cat": "לינה (הוזמן!)",
+   "name": "The Quarter Hotel (פאי)",
+   "desc": "מלון משפחתי מעולה בלב פאי, ממוקם במיקום מצוין ונוח מאוד, מציע בריכת שחייה נעימה, חדרים מרווחים ושירות נהדר. משמש כבסיס הלינה שלכם במהלך הטיול הפרטי של Topper Tours עם המדריך אסף.",
+   "price": "כלול במחיר הטיול (8,500 באט לאדם)"
+  },
+  {
+   "area": "פאי",
+   "cat": "מעיינות חמים",
+   "name": "Tha Pai Hot Springs",
+   "desc": "מעיינות מים חמים טבעיים ובריכות רחצה בלב יער השמורה. חוויה משפחתית מדהימה ומרגיעה בהרים הקרירים.",
+   "price": "כלול בכרטיס המעבר היומי לשמורת Lum Nam Pai (200 באט)"
+  },
+  {
+   "area": "פאי",
+   "cat": "טבע ושקיעה",
+   "name": "Pai Canyon",
+   "desc": "שבילי הליכה צרים על קניון חול עם נופים פנורמיים מרהיבים של ההרים. המקום המושלם לצפייה בשקיעה.",
+   "price": "הכניסה חופשית. מומלץ להגיע ב-16:30 כדי לתפוס מקום טוב."
+  },
+  {
+   "area": "פאי",
+   "cat": "גשר במבוק",
+   "name": "Kho Ku So Bamboo Bridge",
+   "desc": "גשר במבוק ארוך המתוח מעל שדות אורז ירוקים מרהיבים ומוביל למקדש קטן בהרים. פסטורלי ופוטוגני במיוחד.",
+   "price": "עלות סמלית/תרומה. חוויה כפרית מקסימה."
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "לינה (הוזמן!)",
+   "name": "וילה אנאר (Villa Anar)",
+   "desc": "וילת חוף יוקרתית מדהימה עם 5 חדרי שינה (En-suite) בחוף Bang Por בקוסמוי, מושלמת למשפחה שלכם (8 נפשות). הווילה מציעה בריכת אינפיניטי, חוף פרטי, קיאקים, ושירותים מפנקים הכלולים במחיר: שף תאילנדי פרטי צמוד (עלות מצרכים בלבד בתוספת תשלום), ארוחת בוקר יומית, מנהל וילה ושירותי ניקיון יומיים, והסעות הלוך-חזור משדה התעופה בקוסמוי.",
+   "price": "הוזמן! חוף Bang Por, קוסמוי"
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "שייט לאיים",
+   "name": "Angthong National Marine Park",
+   "desc": "טיול יום שלם בסירת מרוץ או קטמרן אל 42 האיים המדהימים. כולל חתירה בקיאקים, שנורקלינג במי קריסטל ומפגש עם קופי בר על החופים.",
+   "price": "עלות בינונית-גבוהה. כולל ארוחת צהריים משפחתית ואיסוף מהמלון."
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "אטרקציית ערב",
+   "name": "Coco Tam's & Fisherman's Village",
+   "desc": "בר חוף מפורסם בחוף בופוט המציע מדי ערב ב-21:00 את מופע האש המרשים והגדול ביותר בתאילנד. מומלץ לשלב עם שוק הלילה ביום שישי.",
+   "price": "מומלץ להגיע מוקדם (בסביבות 19:30-20:00) כדי לתפוס שולחן פנוי!"
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "חזירים בים",
+   "name": "Pig Island (Koh Madsum)",
+   "desc": "שייט קצר בסירת לונגטייל אל אי קטן שבו חזירים ידידותיים מסתובבים חופשי על חול לבן ורך. הילדים יכולים להאכיל אותם, ללטף ולשחות איתם.",
+   "price": "טיול חצי יום מושלם לילדים ולצילומים משפחתיים."
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "בית קפה וחיות",
+   "name": "Capybara World Samui",
+   "desc": "בית קפה ייחודי ומקסים שבו הילדים יכולים לפגוש, ללטף ולהאכיל קפיבארות מתוקות וידידותיות באזור ייעודי ומגודר.",
+   "price": "חוויה מיוחדת ומרגיעה מאוד לכל המשפחה."
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "קניות וגאדג'טים",
+   "name": "MBK Center & Don Don Donki",
+   "desc": "קניון MBK המפורסם הוא המקום האידיאלי לקניות משפחתיות של גאדג'טים, אביזרי סלולר, מזכרות וביגוד במחירים זולים. בתוכו מומלץ לבקר בחנות היפנית הענקית והמטורפת Don Don Donki שפתוחה 24 שעות ומלאה בחטיפים, ממתקים ומוצרים יפניים ייחודיים.",
+   "price": "מחירים זולים, מומלץ להתמקח בדוכנים הקטנים ב-MBK."
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "שוק לילה ואוכל רחוב",
+   "name": "Yaowarat Road (Chinatown)",
+   "desc": "רובע צ'יינה טאון של בנגקוק הופך בערב למדרחוב סוער, מלא באורות ניאון צבעוניים, ריחות של ווקים בוערים ועשרות דוכני אוכל רחוב מכל סוג. חוויית כאוס מרהיבה ותוססת שמומלץ לבקר בה ולספוג את האווירה המיוחדת של העיר בלילה.",
+   "price": "כניסה חופשית, שווה להגיע בסביבות 18:30."
+  }
+ ],
+ "gf": [
+  {
+   "area": "הכנה לטיול",
+   "cat": "ציוד חובה (מהארץ)",
+   "name": "שקיות טוסטר (Toaster Bags)",
+   "desc": "שקיות בד/נייר חסינות חום לקליית לחם בטוסטר המלון/בופה ללא חשש מזיהום משני מלחם רגיל. פריט חובה לשקט נפשי בארוחת הבוקר!",
+   "price": "מוצר חובה - לארוז בתיק היד!"
+  },
+  {
+   "area": "הכנה לטיול",
+   "cat": "ציוד חובה (מהארץ)",
+   "name": "רוטב סויה לל\"ג (Tamari)",
+   "desc": "בקבוק רוטב סויה Tamari או טריאקי ללא גלוטן באריזה אטומה במזוודה הגדולה. רוב המסעדות בתאילנד משתמשות בסויה רגילה עם גלוטן. תוכלו לקחת אותו איתכם בתיק לכל מסעדה ולבקש שיכינו לכם איתו.",
+   "price": "חובה - לארוז במזוודה הגדולה!"
+  },
+  {
+   "area": "הכנה לטיול",
+   "cat": "ציוד חובה (מהארץ)",
+   "name": "Gluten Free Card",
+   "desc": "כרטיס הסבר מודפס בתאילנדית המפרט מהו צליאק, מזהיר מפני רוטב סויה וצדפות רגילים, ומבקש לנקות את הווק/מחבת היטב לפני הבישול. מציל חיים במסעדות מקומיות!",
+   "price": "להדפיס מראש מהארץ ולהציג למלצרים"
+  },
+  {
+   "area": "הכנה לטיול",
+   "cat": "אוכל לטיסה",
+   "name": "גיבוי לטיסה ולשדות תעופה",
+   "desc": "להביא בתיק היד כריכים מלחם לל\"ג מוכר מהבית, חטיפים שלא נמעכים (במבה, אפרופו לל\"ג, עוגיות), ומנות חמות של נודלס אורז (ניתן לבקש מים חמים מהדיילים או בקונקשן). אזהרה: במקדונלדס בנתב\"ג אין מענה בטוח ללא גלוטן! בשדה בנגקוק (BKK) הקינוח Mango Sticky Rice הוא ללא גלוטן מטבעו ובטוח.",
+   "price": "גיבוי בתיק היד (לא לבנות על נתב\"ג)"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "מסעדה לל\"ג",
+   "name": "Nopparat Cuisine & Gallery",
+   "desc": "מסעדה תאילנדית מסורתית מעולה ליד רחוב הקוואסן. הצוות והמנהל מבינים מאוד בצליאק, יש להם רטבים ייעודיים ללא גלוטן ומסבירים בדיוק מה מותר ומה אסור מהתפריט.",
+   "price": "$-$$ (ליד הקוואסן, פתרון מעולה!)"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "מסעדה לל\"ג",
+   "name": "Hard Rock Cafe (Siam Square)",
+   "desc": "המבורגרים קלאסיים מעולים בלחמנייה ללא גלוטן (GF Bun), והכי חשוב - צ'יפס פריך שמטוגן בצ'יפסר נפרד לחלוטין המיועד רק לללא גלוטן. ממוקם בסיאם סקוור ממש ליד המלון שלכם!",
+   "price": "$$ (מרחק הליכה קצר מהמלון)"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "פיצרייה לל\"ג",
+   "name": "Pizza Massilia / Peppina",
+   "desc": "פיצות נפוליטניות מטורפות עם אפשרות לבסיס ייחודי ללא גלוטן וסלטים מעולים, במודעות גבוהה למניעת זיהום צולב.",
+   "price": "$$ (סניפים ברחבי העיר / סוקומוויט)"
+  },
+  {
+   "area": "בנגקוק",
+   "cat": "מסעדה לל\"ג",
+   "name": "Bangkok Bold Kitchen",
+   "desc": "מסעדה תאילנדית מצוינת בקומת הקרקע של קניון Central Embassy הסמוך. מציעים תפריט ייחודי ללא גלוטן: פרייד רייס (אורז מוקפץ), מוקפצים וקארי במודעות גבוהה לאלרגנים.",
+   "price": "$$ (קניון Central Embassy)"
+  },
+  {
+   "area": "צ'יאנג מאי",
+   "cat": "מסעדה לל\"ג",
+   "name": "Kat's Kitchen",
+   "desc": "מסעדה תאילנדית קלאסית מומלצת במיוחד בעיר העתיקה. מודעות שיא לצליאק - מבינים מיד את כרטיס ההסבר ומתאימים כמעט כל מנה תאילנדית (כמו פאד תאי או אורז מוקפץ) לללא גלוטן עם רטבים בטוחים. מנות נדיבות וזולות.",
+   "price": "$ (חובה לבקר בצ'יאנג מאי!)"
+  },
+  {
+   "area": "צ'יאנג מאי",
+   "cat": "דיינר לל\"ג",
+   "name": "Butter Is Better",
+   "desc": "דיינר אמריקאי קלאסי ומצוין הממוקם ברובע צ'אנג קלאן (ממש קרוב למלון Meliá שלכם!). מציע לחם, בייגל, פנקייקים, פסטה וארוחות בוקר אמריקאיות - הכל בגרסאות מעולות ללא גלוטן.",
+   "price": "$-$$ (סמוך מאוד למלון מליה!)"
+  },
+  {
+   "area": "פאי",
+   "cat": "מסעדה לל\"ג",
+   "name": "Na's Kitchen",
+   "desc": "מסעדה תאילנדית ביתית מדהימה ופופולרית בפאי. יש להם רוטב סויה ורוטב צדפות ללא גלוטן (נדיר מאוד בתאילנד!), ומכינים אוכל מסורתי בטוח וטעים להפליא.",
+   "price": "$ (מומלץ מאוד בערב בפאי!)"
+  },
+  {
+   "area": "פאי",
+   "cat": "טוסטים לל\"ג",
+   "name": "Cheese Madness",
+   "desc": "דוכן/מסעדה קטנה המציעה טוסטים גבינה מותכים בהרכבה עצמית. יש לחם ללא גלוטן וטוסטר לחיצה ייעודי ונפרד לחלוטין למניעת זיהום צולב. פתרון מעולה וטעים לילדים ובני נוער!",
+   "price": "$ (שוק הלילה של פאי)"
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "מסעדה לל\"ג",
+   "name": "Kawin's Kitchen",
+   "desc": "מסעדה תאילנדית ביתית מומלצת בבופוט (מול מלון הולידיי אין בכפר הדייגים). לבעלת המקום יש בת צליאקית, ולכן המודעות היא 100% והמטבח בטוח לחלוטין. מנות תאילנדיות ענקיות וטעימות (פאד תאי, קארי, מוקפצים ודגים).",
+   "price": "$-$$ (חובה בערב של Fisherman's Village!)"
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "איטלקי לל\"ג",
+   "name": "Prego Samui (Amari)",
+   "desc": "מסעדה איטלקי יוקרתית בחוף צ'אוונג (צמוד למלון Amari). מציעה תפריט נפרד ומלא ללא גלוטן: לחם פתיחה חם, פסטות מגוונות, פיצות מעולות, וקינוח טירמיסו אלוהי ללא גלוטן!",
+   "price": "$$$ (מומלץ לערב חגיגי משפחתי)"
+  },
+  {
+   "area": "קוסמוי",
+   "cat": "משלוחים לל\"ג",
+   "name": "Hot Point (הנקודה החמה)",
+   "desc": "מסעדה ישראלית בשרית בצ'אוונג המציעה משלוחים ישירות לוילה אנאר! יש שניצלים ענקיים ופריכים בציפוי ללא גלוטן (בטיגון נפרד), זיווה ללא גלוטן, צ'יפס, בשרים וחומוס.",
+   "price": "$-$$ (עושים משלוחים ישירות לוילה!)"
+  }
+ ],
+ "tasks": [
+  {
+   "task": "בדיקת תוקף דרכונים (חצי שנה לפחות מיום הטיסה)",
+   "owner": "כולם",
+   "status": "בתהליך"
+  },
+  {
+   "task": "הזמנת מלונות לצ'יאנג מאי - מלון Meliá Chiang Mai",
+   "owner": "כולם",
+   "status": "בוצע"
+  },
+  {
+   "task": "תיאום סופי מול Topper Tours לפאי (הוזמן - אצל אסף במלון Quarter!)",
+   "owner": "אבא",
+   "status": "בוצע"
+  },
+  {
+   "task": "הזמנת וילה אנאר בקוסמוי (Villa Anar) - 19-26.09",
+   "owner": "כולם",
+   "status": "בוצע"
+  },
+  {
+   "task": "הזמנת מלון לשני הלילות האחרונים בבנגקוק (26-28 בספטמבר)",
+   "owner": "אבא/אמא",
+   "status": "טרם התחיל"
+  },
+  {
+   "task": "הזמנת טיסות פנים מצ'יאנג מאי לקוסמוי (19 בספטמבר)",
+   "owner": "אבא",
+   "status": "טרם התחיל"
+  },
+  {
+   "task": "הזמנת טיסות פנים מקוסמוי לבנגקוק (26 בספטמבר)",
+   "owner": "אבא",
+   "status": "טרם התחיל"
+  },
+  {
+   "task": "רכישת ביטוח נסיעות מקיף (ספורט אתגרי, אקסטרים ואומגות)",
+   "owner": "אמא",
+   "status": "טרם התחיל"
+  },
+  {
+   "task": "רכישת כדורים נגד בחילות נסיעה (לכביש של פאי עם 762 הסיבובים!)",
+   "owner": "אמא",
+   "status": "טרם התחיל"
+  },
+  {
+   "task": "הורדת אפליקציות Grab ו-Bolt לנייד והזנת כרטיס אשראי",
+   "owner": "כולם",
+   "status": "טרם התחיל"
+  },
+  {
+   "task": "רכישת שקיות טוסטר (Toaster Bags) ללחם בארוחת הבוקר במלונות",
+   "owner": "אמא",
+   "status": "בתהליך"
+  },
+  {
+   "task": "הצטיידות בלחמים/לחמניות באריזת ואקום (Green Lite/Schär)",
+   "owner": "אמא",
+   "status": "בתהליך"
+  },
+  {
+   "task": "רכישת בקבוק רוטב סויה ללא גלוטן (Tamari) לנשיאה בתיק לכל מסעדה",
+   "owner": "אמא",
+   "status": "בתהליך"
+  },
+  {
+   "task": "הדפסת כרטיסי הסבר בתאילנדית (Gluten Free Card) למסעדות מקומיות",
+   "owner": "אמא",
+   "status": "בתהליך"
+  }
+ ],
+ "pack": [
+  {
+   "item": "דרכונים בתוקף, כרטיסי טיסה מודפסים ואישורי מלונות",
+   "cat": "מסמכים",
+   "packed": "לא"
+  },
+  {
+   "item": "רישיונות נהיגה בינלאומיים (למקרה של השכרת רכב/טוסטוס)",
+   "cat": "מסמכים",
+   "packed": "לא"
+  },
+  {
+   "item": "צילום של כל הדרכונים והמסמכים שמורים בנייד ובמייל",
+   "cat": "מסמכים",
+   "packed": "לא"
+  },
+  {
+   "item": "בגדי ים, חולצות שמש (מסננות קרינה) ובגדי קיץ קלילים",
+   "cat": "ביגוד",
+   "packed": "לא"
+  },
+  {
+   "item": "עליונית חמה / סוודר קל (בצפון ובפאי קריר בערבים ובבקרים!)",
+   "cat": "ביגוד",
+   "packed": "לא"
+  },
+  {
+   "item": "נעלי הליכה סגורות ונוחות + סנדלי מים / כפכפים",
+   "cat": "ביגוד",
+   "packed": "לא"
+  },
+  {
+   "item": "מטען נייד (Power Bank) חזק לטיולים ארוכים מחוץ למלון",
+   "cat": "אלקטרוניקה",
+   "packed": "לא"
+  },
+  {
+   "item": "מתאם לחשמל (רוב השקעים מתאימים אך מומלץ מתאם בינלאומי)",
+   "cat": "אלקטרוניקה",
+   "packed": "לא"
+  },
+  {
+   "item": "קרם הגנה חזק מהשמש ותכשיר יעיל נגד יתושים (חובה!)",
+   "cat": "בריאות וטיפוח",
+   "packed": "לא"
+  },
+  {
+   "item": "ערכת עזרה ראשונה משפחתית (תרופות ילדים, משככי כאבים, פלסטרים)",
+   "cat": "בריאות וטיפוח",
+   "packed": "לא"
+  },
+  {
+   "item": "שקיות טוסטר ייעודיות (Toaster Bags) ללחם",
+   "cat": "מזון ורטבים",
+   "packed": "לא"
+  },
+  {
+   "item": "רוטב סויה לל\"ג (Tamari) - לארוז במזוודה הגדולה!",
+   "cat": "מזון ורטבים",
+   "packed": "לא"
+  },
+  {
+   "item": "לחמים ולחמניות באריזת ואקום (גיבוי לטיולים)",
+   "cat": "מזון ורטבים",
+   "packed": "לא"
+  },
+  {
+   "item": "מנות חמות לל\"ג ונודלס אורז מהיר (גיבוי לטיסה)",
+   "cat": "מזון ורטבים",
+   "packed": "לא"
+  },
+  {
+   "item": "חטיפים אהובים לל\"ג לילדים (במבה, אפרופו לל\"ג)",
+   "cat": "מזון ורטבים",
+   "packed": "לא"
+  },
+  {
+   "item": "כרטיס הסבר מודפס בתאילנדית (Gluten Free Card)",
+   "cat": "מסמכים",
+   "packed": "לא"
+  }
+ ],
+ "meta": {
+  "title": "טיול משפחתי לתאילנד — ספטמבר 2026",
+  "pnr": "8Q53O2",
+  "airlines": "ITA Airways & Thai Airways",
+  "pax": 5,
+  "baggage": "מזוודה אחת 23 ק\"ג לכל נוסע (1PC)"
+ }
+}</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hl=s=>esc(s).replace(/(\b\d{1,2}:\d{2}(?:-\d{1,2}:\d{2})?)/g,'<span class="t">$1</span>');
+const store={get(k,d){try{const v=localStorage.getItem('th26:'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('th26:'+k,JSON.stringify(v))}catch(e){}}};
+const dayName=d=>['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'][new Date(d+'T00:00').getDay()];
+const fmt=d=>{const [y,m,dd]=d.split('-');return `${+dd}.${+m}`};
+function todayISO(){const n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
+const addDays=(d,n)=>{const x=new Date(d+'T00:00');x.setDate(x.getDate()+n);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+const idx=Object.fromEntries(D.days.map((d,i)=>[d.date,i]));
+
+/* ---------- now ---------- */
+let showTomorrow=false;
+function renderToday(){
+  const s=$('#s-today'),t=todayISO(),first=D.days[0].date,last=D.days[D.days.length-1].date;
+  let html='';
+  if(t<first){
+    const n=Math.round((new Date(first)-new Date(t))/864e5);
+    html+=`<div class="card hero"><div class="sub">ספירה לאחור</div><div class="big">${n} ימים</div><div class="sub">עד הטיסה ב-${fmt(first)}, ${dayName(first)}, 05:15 מנתב"ג</div></div>`;
+    const open=D.tasks.filter(x=>x.status!=='בוצע');
+    const done=store.get('tasks',{});
+    const remaining=open.filter(x=>!done[x.task]);
+    html+=`<div class="card"><h2>נשאר לסגור לפני הטיסה <span class="chip gold">${remaining.length}</span></h2>${remaining.slice(0,8).map(x=>`<p style="margin:4px 0">• ${esc(x.task)} <span class="muted small">(${esc(x.owner)})</span></p>`).join('')||'<p class="muted">הכל סגור 🎉</p>'}</div>`;
+    html+=dayCard(D.days[0],'היום הראשון');
+  } else if(t>last){
+    html+=`<div class="card hero"><div class="big">חזרנו הביתה</div><div class="sub">הטיול הסתיים ב-${fmt(last)}. כל התכנון עדיין כאן למזכרת.</div></div>`;
+  } else {
+    const cur=D.days[idx[t]],nxt=D.days[idx[addDays(t,1)]];
+    html+=`<div class="toggle"><button id="bT" class="${showTomorrow?'':'on'}">היום · ${fmt(t)}</button><button id="bN" class="${showTomorrow?'on':''}">מחר · ${fmt(addDays(t,1))}</button></div>`;
+    const d=showTomorrow?nxt:cur;
+    html+= d?dayCard(d,showTomorrow?'מחר':'היום',true):`<div class="card muted">אין תכנון ליום הזה</div>`;
+  }
+  html+=`<div class="card"><h2>פרטים חשובים</h2><p class="small">קוד הזמנה <b class="mono">${esc(D.meta.pnr)}</b> · ${esc(D.meta.airlines)} · ${D.meta.pax} נוסעים</p><p class="small muted">${esc(D.meta.baggage)}</p><p class="small">רגישות: <b>תמר — צליאק (ללא גלוטן)</b>. לשאת תמיד: כרטיס הסבר בתאילנדית + בקבוק Tamari.</p></div>`;
+  s.innerHTML=html;
+  const bT=$('#bT'),bN=$('#bN');
+  if(bT){bT.onclick=()=>{showTomorrow=false;renderToday()};bN.onclick=()=>{showTomorrow=true;renderToday()}}
+}
+function dayCard(d,label,hero){
+  const chip=d.status==='הוזמן'?'<span class="chip">הוזמן</span>':`<span class="chip red">${esc(d.status)}</span>`;
+  return `<div class="card ${hero?'hero':''}">
+   <div class="${hero?'sub':'muted small'}">${label} · יום ${esc(d.weekday)}, ${fmt(d.date)}</div>
+   <div class="${hero?'big':''}" style="${hero?'':'font-size:22px;font-weight:900'}">${esc(d.dest)}</div>
+   <div class="${hero?'day':''}">🛏 ${esc(d.hotel)}</div></div>
+   <div class="card act"><h3>מה עושים</h3><p>${hl(d.activities)}</p>
+   <h3>לוגיסטיקה</h3><p>${hl(d.logistics)}</p>
+   ${d.notes?`<h3>שימו לב</h3><p>${hl(d.notes)}</p>`:''}
+   <p class="small muted">${chip} ${d.cost?`· עלות מוערכת <b class="mono">${d.cost.toLocaleString()}</b> ฿`:''}</p></div>`;
+}
+
+/* ---------- days ---------- */
+function renderDays(){
+  const t=todayISO();
+  $('#dayslist').innerHTML=`<h2>${D.days.length} ימים · ${fmt(D.days[0].date)} עד ${fmt(D.days.at(-1).date)}</h2>`+D.days.map((d,i)=>`
+   <div class="dayrow ${d.date===t?'open':''}" data-i="${i}">
+    <div class="date ${d.date<t?'past':d.date===t?'today':''}">${+d.date.slice(8)}<small>${esc(d.weekday)}</small></div>
+    <div class="body"><div class="dest">${esc(d.dest)} ${d.status!=='הוזמן'?`<span class="chip red">${esc(d.status)}</span>`:''}</div>
+     <div class="hotel">🛏 ${esc(d.hotel)}</div>
+     <div class="detail"><p><b>מה עושים:</b> ${hl(d.activities)}</p><p><b>לוגיסטיקה:</b> ${hl(d.logistics)}</p>${d.notes?`<p><b>שימו לב:</b> ${hl(d.notes)}</p>`:''}${d.cost?`<p class="muted small">עלות מוערכת <span class="mono">${d.cost.toLocaleString()}</span> ฿</p>`:''}</div>
+    </div></div>`).join('');
+  document.querySelectorAll('.dayrow').forEach(r=>r.onclick=()=>r.classList.toggle('open'));
+}
+
+/* ---------- flights ---------- */
+function renderFlights(){
+  $('#s-flights').innerHTML=`
+  <div class="card hero"><div class="sub">קוד הזמנה (PNR)</div><div class="big mono">${esc(D.meta.pnr)}</div><div class="sub">${esc(D.meta.airlines)} · ${esc(D.meta.baggage)}</div></div>
+  <div class="card"><h2>לוח טיסות</h2>${D.flights.map(f=>f.code.startsWith('-')?`<div class="rec muted small">⏱ קונקשן ${esc(f.airline)} — ${esc(f.duration)}</div>`:`<div class="rec"><div class="name"><span class="mono">${esc(f.code)}</span> · ${esc(f.airline)}</div><div class="desc">${esc(f.origin)} <span class="mono">${esc(f.dep)}</span> ← ${esc(f.dest)} <span class="mono">${esc(f.arr)}</span></div><div class="muted small">${esc(f.duration)}</div></div>`).join('')}</div>
+  <div class="card"><h2>נוסעים · TG 110 (בנגקוק–צ'יאנג מאי)</h2><div class="scroll"><table><tr><th>שם</th><th>מושב</th><th>ארוחה</th><th>כרטיס</th></tr>${D.pax.map(p=>`<tr><td>${esc(p.name)}</td><td class="mono">${esc(p.seat)}</td><td>${esc(p.meal)}<br><span class="muted small">${esc(p.mealStatus)}</span></td><td class="mono small">${esc(p.ticket)}</td></tr>`).join('')}</table></div></div>
+  <div class="notice">⚠️ טיסות הפנים צ'יאנג מאי→קוסמוי (19.9) וקוסמוי→בנגקוק (26.9) מסומנות בטבלה כ"טרם התחיל" — לוודא שהוזמנו.</div>
+  <div class="notice">בטיסת החזור (28.9) להגיע לסוברנבהומי כ-3.5 שעות לפני ההמראה.</div>`;
+}
+
+/* ---------- food ---------- */
+let area='הכל';
+function renderFood(){
+  const areas=['הכל',...new Set([...D.gf,...D.recs].map(x=>x.area))];
+  const gf=D.gf.filter(x=>area==='הכל'||x.area===area), rc=D.recs.filter(x=>area==='הכל'||x.area===area);
+  $('#s-food').innerHTML=`<div class="filters">${areas.map(a=>`<button class="${a===area?'on':''}" data-a="${esc(a)}">${esc(a)}</button>`).join('')}</div>
+  <div class="card"><h2>ללא גלוטן — לתמר 🌾🚫</h2>${gf.map(x=>`<div class="rec"><div class="name">${esc(x.name)} <span class="chip">${esc(x.cat)}</span></div><div class="desc">${esc(x.desc)}</div><div class="price">${esc(x.price)}</div></div>`).join('')||'<p class="muted">אין פריטים באזור זה</p>'}</div>
+  <div class="card"><h2>לינה ואטרקציות</h2>${rc.map(x=>`<div class="rec"><div class="name">${esc(x.name)} <span class="chip gold">${esc(x.cat)}</span></div><div class="desc">${esc(x.desc)}</div><div class="price">${esc(x.price)}</div></div>`).join('')}</div>`;
+  document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{area=b.dataset.a;renderFood();window.scrollTo(0,0)});
+}
+
+/* ---------- tasks ---------- */
+function renderTasks(){
+  const dt=store.get('tasks',{}),dp=store.get('pack',{});
+  const tdone=D.tasks.filter(x=>x.status==='בוצע'||dt[x.task]).length, pdone=D.pack.filter(x=>dp[x.item]).length;
+  const cats=[...new Set(D.pack.map(x=>x.cat))];
+  $('#s-tasks').innerHTML=`
+  <div class="card"><h2>משימות לפני הטיסה <span class="chip">${tdone}/${D.tasks.length}</span></h2><div class="prog"><i style="width:${100*tdone/D.tasks.length}%"></i></div>
+   ${D.tasks.map(x=>{const on=x.status==='בוצע'||!!dt[x.task];return `<label class="chk ${on?'done':''}"><input type="checkbox" data-k="t" data-id="${esc(x.task)}" ${on?'checked':''}><span><span class="txt">${esc(x.task)}</span><span class="own">${esc(x.owner)}${x.status&&x.status!=='בוצע'?' · '+esc(x.status):''}</span></span></label>`}).join('')}</div>
+  <div class="card"><h2>רשימת אריזה <span class="chip">${pdone}/${D.pack.length}</span></h2><div class="prog"><i style="width:${100*pdone/D.pack.length}%"></i></div>
+   ${cats.map(c=>`<h3>${esc(c)}</h3>`+D.pack.filter(x=>x.cat===c).map(x=>`<label class="chk ${dp[x.item]?'done':''}"><input type="checkbox" data-k="p" data-id="${esc(x.item)}" ${dp[x.item]?'checked':''}><span class="txt">${esc(x.item)}</span></label>`).join('')).join('')}</div>
+  <p class="muted small" style="text-align:center">הסימונים נשמרים במכשיר הזה בלבד.</p>`;
+  document.querySelectorAll('#s-tasks input').forEach(i=>i.onchange=()=>{const k=i.dataset.k==='t'?'tasks':'pack';const o=store.get(k,{});o[i.dataset.id]=i.checked;store.set(k,o);renderTasks();if(k==='tasks')renderToday()});
+}
+
+/* ---------- AI ---------- */
+let sample=null,history=[];
+const SUGG=['מה קורה מחר?','איפה תמר יכולה לאכול בצ\'יאנג מאי?','מה השעה של הטיסה חזרה?','מה לוקחים לפאי ומה משאירים?','מה מספר המושב של חוה?','מה ההוצאות המוערכות בקוסמוי?'];
+function ctx(){return `אתה עוזר טיול משפחתי לתאילנד (10–29.9.2026), משפחת דמבינסקי + יוסף. ענה בעברית, קצר וברור, על סמך הנתונים בלבד. אם המידע לא בנתונים — אמור זאת במפורש ואל תמציא. היום: ${todayISO()}. תמר צליאקית — כל המלצת אוכל עבורה חייבת להיות ללא גלוטן ומהרשימה.\n\nנתוני הטיול (JSON):\n${JSON.stringify(D)}`}
+function addMsg(t,cls){const m=document.createElement('div');m.className='msg '+cls;m.textContent=t;$('#chat').appendChild(m);m.scrollIntoView({block:'end'});return m}
+async function ask(q){
+  if(!q.trim())return;
+  $('#q').value='';addMsg(q,'u');
+  if(!sample||(sample===direct&&!store.get('apikey',''))){addMsg('כדי לשאול, שמרו קודם מפתח API בשדה למעלה.','a');return}
+  const m=addMsg('חושב…','a');$('#send').disabled=true;
+  const turns=[{role:'user',content:ctx()},{role:'assistant',content:'מובן. אשיב על סמך נתוני הטיול בלבד.'},...history,{role:'user',content:q}];
+  try{
+    const r=await sample(turns,{cache:false,onText:({text})=>{m.textContent=text;m.scrollIntoView({block:'end'})}});
+    m.textContent=r.text;history.push({role:'user',content:q},{role:'assistant',content:r.text});history=history.slice(-10);
+  }catch(e){m.textContent=e&&e.text?e.text:'לא הצלחתי לענות ('+(e&&e.code||'שגיאה')+'). נסו שוב.'}
+  $('#send').disabled=false;
+}
+$('#sugg').innerHTML=SUGG.map(s=>`<button>${esc(s)}</button>`).join('');
+document.querySelectorAll('#sugg button').forEach(b=>b.onclick=()=>{show('ai');ask(b.textContent)});
+$('#send').onclick=()=>ask($('#q').value);$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')ask($('#q').value)});
+async function direct(turns,opts){
+  const key=store.get('apikey','');if(!key)throw{code:'no_key'};
+  const sys=turns[0].content, msgs=turns.slice(2);
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,system:sys,messages:msgs})});
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw{code:r.status,text:'שגיאה מה-API: '+(e.error&&e.error.message||r.status)}}
+  const j=await r.json();return{text:j.content.map(c=>c.text||'').join('')};
+}
+(async()=>{try{if(window.claude&&window.claude.use){sample=await claude.use('sample')}}catch(e){sample=null}
+  if(!sample){sample=direct;$('#aikey').style.display='block';$('#keyin').value=store.get('apikey','')?'••••••••':'';
+    $('#keybtn').onclick=()=>{const v=$('#keyin').value.trim();if(v&&!v.startsWith('•')){store.set('apikey',v);$('#keyin').value='••••••••';addMsg('המפתח נשמר. אפשר לשאול.','a')}}}
+})();
+
+/* ---------- PIN ---------- */
+const PIN='2609'; // קוד הכניסה — לשינוי כאן
+(function(){const g=$('#gate');if(store.get('unlocked')===PIN){g.remove();return}
+ const go=()=>{if($('#pin').value===PIN){store.set('unlocked',PIN);g.remove()}else{$('#pinerr').textContent='קוד שגוי';$('#pin').value=''}};
+ $('#pinbtn').onclick=go;$('#pin').addEventListener('keydown',e=>{if(e.key==='Enter')go()});})();
+
+/* ---------- nav ---------- */
+function show(id){document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id==='s-'+id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));window.scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.s));
+$('#hdrsub').textContent=`${fmt(D.days[0].date)} עד ${fmt(D.days.at(-1).date)} · ${D.meta.airlines} · PNR ${D.meta.pnr}`;
+renderToday();renderDays();renderFlights();renderFood();renderTasks();
+</script>
+</body>
+</html>
