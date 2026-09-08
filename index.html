@@ -108,7 +108,7 @@ a{color:var(--jade)}
 </head>
 <body>
 <div class="gate" id="gate"><div style="font-size:48px">🐘</div><h2>תאילנד 2026</h2><p>הזינו קוד כניסה</p><input id="pin" inputmode="numeric" maxlength="6" autocomplete="off"><button id="pinbtn">כניסה</button><div class="err" id="pinerr"></div></div>
-<header><h1 id="hdr">תאילנד 2026 — מלווה הטיול</h1><p id="hdrsub"></p></header>
+<header><h1 id="hdr">תאילנד 2026 — מלווה הטיול</h1><p id="hdrsub"></p><p id="sync" class="small muted" style="margin:0;font-size:12px"></p></header>
 <main>
 <section id="s-today" class="active"></section>
 <section id="s-days"><div class="card" id="dayslist"></div></section>
@@ -866,7 +866,44 @@ a{color:var(--jade)}
  }
 }</script>
 <script>
-const D=JSON.parse(document.getElementById('data').textContent);
+let D=JSON.parse(document.getElementById('data').textContent);
+const SHEET_ID='19gzQaWP49OuX3fo0CxCtfAX-NQNY5fdLP1ffkygYUko';
+const SHEETS={days:'טבלת מסלול ימי',flights:'פרטי טיסות ונוסעים',recs:'המלצות לינה ואטרקציות',tasks:'רשימת ציוד ומשימות'};
+function parseCSV(s){const rows=[];let row=[],f='',q=false;for(let i=0;i<s.length;i++){const c=s[i];
+ if(q){if(c==='"'){if(s[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+ else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'){row.push(f);rows.push(row);row=[];f=''}else if(c!=='\r')f+=c}
+ if(f!==''||row.length){row.push(f);rows.push(row)}return rows.map(r=>r.map(x=>x.trim()))}
+function isoDate(s){s=(s||'').trim();let m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return m[1]+'-'+m[2]+'-'+m[3];
+ m=s.match(/^(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');return null}
+const num=s=>parseInt(String(s||'').replace(/[^\d]/g,''),10)||0;
+function fromSheets(csv){
+ const g=(r,i)=>r[i]||'';const out={meta:D.meta};
+ out.days=parseCSV(csv.days).filter(r=>isoDate(r[0])).map(r=>({date:isoDate(r[0]),weekday:g(r,1),dest:g(r,2),hotel:g(r,3),activities:g(r,4),logistics:g(r,5),status:g(r,6),cost:num(r[7]),notes:g(r,8)}));
+ let mode='';out.pax=[];out.flights=[];
+ for(const r of parseCSV(csv.flights)){if(r[0]==='מספר נוסע'){mode='p';continue}if(r[0]==='קוד טיסה'){mode='f';continue}
+  if(mode==='p'&&/^P\d/.test(r[0]))out.pax.push({id:r[0],name:g(r,1),type:g(r,2),ticket:g(r,3),seat:g(r,4),meal:g(r,5),mealStatus:g(r,6)});
+  if(mode==='f'&&r[0]&&r[1])out.flights.push({code:r[0],airline:g(r,1),origin:g(r,2),dep:g(r,3),dest:g(r,4),arr:g(r,5),duration:g(r,6)})}
+ let sec='recs';out.recs=[];out.gf=[];
+ for(const r of parseCSV(csv.recs)){if(r[0].startsWith('מדריך קולינרי')){sec='gf';continue}if(!r[0]||!r[2]||r[0]==='אזור / יעד')continue;
+  out[sec].push({area:r[0],cat:g(r,1),name:g(r,2),desc:g(r,3),price:g(r,4)})}
+ out.tasks=[];out.pack=[];
+ for(const r of parseCSV(csv.tasks)){if(r[0]&&r[1]&&!['משימה לקראת הטיול','משימות לביצוע לפני הטיסה'].includes(r[0])&&r[0]!=='משימות הכנה ורשימת ציוד משפחתית'&&!r[0].startsWith('מעקב'))out.tasks.push({task:r[0],owner:g(r,1),status:g(r,2)});
+  if(r[4]&&r[5]&&r[4]!=='פריט אריזה')out.pack.push({item:r[4],cat:g(r,5),packed:g(r,6)})}
+ if(out.days.length<5||!out.flights.length)throw new Error('bad shape');
+ return out;}
+async function loadSheets(){
+ const st=$('#sync');
+ try{
+  const csv={};await Promise.all(Object.entries(SHEETS).map(async([k,n])=>{
+   const r=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=0&sheet=${encodeURIComponent(n)}`,{cache:'no-store'});
+   if(!r.ok)throw new Error(r.status);csv[k]=await r.text()}));
+  D=fromSheets(csv);store.set('sheetcache',{t:Date.now(),D});renderAll();
+  st.textContent='מסונכרן עם הגיליון · '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+ }catch(e){
+  const c=store.get('sheetcache',null);
+  if(c){D=c.D;renderAll();st.textContent='ללא חיבור — נתונים מהסנכרון האחרון ('+new Date(c.t).toLocaleDateString('he-IL')+')'}
+  else st.textContent='ללא חיבור לגיליון — מוצגים הנתונים המוטמעים';
+ }}
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const hl=s=>esc(s).replace(/(\b\d{1,2}:\d{2}(?:-\d{1,2}:\d{2})?)/g,'<span class="t">$1</span>');
@@ -1004,8 +1041,9 @@ const PIN='2609'; // קוד הכניסה — לשינוי כאן
 /* ---------- nav ---------- */
 function show(id){document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id==='s-'+id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));window.scrollTo(0,0)}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.s));
-$('#hdrsub').textContent=`${fmt(D.days[0].date)} עד ${fmt(D.days.at(-1).date)} · ${D.meta.airlines} · PNR ${D.meta.pnr}`;
-renderToday();renderDays();renderFlights();renderFood();renderTasks();
+function renderAll(){renderToday();renderDays();renderFlights();renderFood();renderTasks();$('#hdrsub').textContent=`${fmt(D.days[0].date)} עד ${fmt(D.days.at(-1).date)} · ${D.meta.airlines} · PNR ${D.meta.pnr}`}
+renderAll();if(SHEET_ID&&!SHEET_ID.startsWith('__'))loadSheets();
+$('#sync').onclick=()=>{$('#sync').textContent='מסנכרן…';loadSheets()};
 </script>
 </body>
 </html>
